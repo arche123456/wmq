@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- RoboMaster 2024 哨兵7号 导航框架 -->
+<robot name="rm_2024_SENTRY_7_nav"
+  xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="line_width" value="0.05" />
+  
+  <!-- <link name="lidar_init" /> -->
+  <link name="lidar_now" />
+  <link name="robot_center" />
+  <link name="livox_frame" />
+  <link name="robot_foot" />
+  
+
+ 
+  <!-- <joint name="foot_init_lidar_init_joint" type="fixed">
+    <origin xyz="0 0 0.568" rpy="${180/180*pi} 0 0" />
+    <parent link="map" />
+    <child link="lidar_init" />
+  </joint> -->
+
+  <!-- <joint name="lidar_init_lidar_now_joint" type="floating">
+    
+    <parent link="lidar_init" />
+    <child link="lidar_now" />
+  </joint> -->
+
+  <joint name="lidar_now_gimbal_link_joint" type="fixed">
+    <origin xyz="0 0 0.200802 " rpy="-${180/180*pi} 0 0" />
+    <parent link="lidar_now" />
+    <child link="robot_center" />
+  </joint>
+
+  <joint name="foot_init_joint" type="fixed">
+    <origin xyz="0 0 -0.432" rpy="0 0 0" />
+    <parent link="robot_center" />       
+    <child link="robot_foot" />
+  </joint>
+
+  <joint name="livox_joint" type="fixed">
+    <origin xyz="0.00495 -0.1339 0.0142" rpy="0 ${180/180*pi} ${180/180*pi}" />
+    <parent link="robot_center" />
+    <child link="livox_frame" />
+  </joint>
+
+</robot>

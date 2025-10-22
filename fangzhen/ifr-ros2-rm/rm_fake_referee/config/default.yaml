@@ -1,0 +1,7 @@
+rm:
+  fake:
+    game:
+      rmul:
+        ros__parameters:
+          robot_level: 10
+          remain_HP: 500

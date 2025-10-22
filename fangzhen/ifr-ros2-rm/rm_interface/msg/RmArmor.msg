@@ -1,0 +1,4 @@
+# 代表RoboMaster中一个装甲板信息
+uint8 type
+float32 distance_to_image_center
+geometry_msgs/Pose pose

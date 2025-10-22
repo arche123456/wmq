@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="root">
+    <ParallelAsync failure_limit="1=999;2=999;3=999"
+                   success_limit="1=999;2=999;3=999"
+                   max_failures="999">
+      <RefereeSystemUpdate BulletRemaining="{REFEREE_MSG_BulletRemaining}"
+                           ShootData="{REFEREE_MSG_ShootData}"
+                           Buff="{REFEREE_MSG_Buff}"
+                           GameRobotStatus="{REFEREE_MSG_GameRobotStatus}"
+                           EventData="{REFEREE_MSG_EventData}"
+                           GameRobotHP="{REFEREE_MSG_GameRobotHP}"
+                           GameResult="{REFEREE_MSG_GameResult}"
+                           RobotHurt="{REFEREE_MSG_RobotHurt}"
+                           GameStatus="{REFEREE_MSG_GameStatus}"
+                           SentryInfo="{REFEREE_MSG_SentryInfo}"/>
+      <ForceSuccess _description="回血检查">
+        <Fallback>
+          <RecoveryHealthCheck value="{is_healthing}"
+                               max_recovery="600000"
+                               max_recovery_sec="800000"
+                               once_recovery="100"
+                               GameRobotStatus="{REFEREE_MSG_GameRobotStatus}">
+            <EnterStatus time="8"
+                         value="{can_health}"/>
+          </RecoveryHealthCheck>
+          <ExitStatus value="{can_health}"/>
+        </Fallback>
+      </ForceSuccess>
+      <GameTimeCheck time_max="2147483647"
+                     time_min="0"
+                     stage="4"
+                     GameStatus="{REFEREE_MSG_GameStatus}">
+        <WaitFallback>
+          <OutpostCheck GameRobotStatus="{REFEREE_MSG_GameRobotStatus}"
+                        GameRobotHP="{REFEREE_MSG_GameRobotHP}">
+            <Fallback>
+              <BulletCheck17mm min="150"
+                               BulletRemaining="{REFEREE_MSG_BulletRemaining}">
+                <Navigation pose="map;-1.07;-3.99;0"
+                            action_name="__default__placeholder__"/>
+              </BulletCheck17mm>
+              <Navigation pose="map;2.87;0.71;0"
+                          action_name="__default__placeholder__"/>
+            </Fallback>
+          </OutpostCheck>
+          <SelfHealthCheck min="0"
+                           max="200"
+                           GameRobotStatus="{REFEREE_MSG_GameRobotStatus}">
+            <CheckStatus value="{can_health}">
+              <Sequence>
+                <EnterStatus time="8"
+                             value="{is_healthing}"/>
+                <AlwaysFailure/>
+              </Sequence>
+            </CheckStatus>
+          </SelfHealthCheck>
+          <SelfHealthCheck min="350"
+                           max="400"
+                           GameRobotStatus="{REFEREE_MSG_GameRobotStatus}">
+            <Sequence>
+              <ExitStatus value="{is_healthing}"/>
+              <AlwaysFailure/>
+            </Sequence>
+          </SelfHealthCheck>
+          <CheckStatus value="{is_healthing}">
+            <Navigation pose="map;-1.07;-3.99;0"
+                        action_name="__default__placeholder__"/>
+          </CheckStatus>
+          <GameTimeCheck time_max="300"
+                         time_min="285"
+                         stage="4"
+                         GameStatus="{REFEREE_MSG_GameStatus}">
+            <BulletCheck17mm min="400"
+                             BulletRemaining="{REFEREE_MSG_BulletRemaining}">
+              <BulletRedemption BulletRemaining="{REFEREE_MSG_BulletRemaining}"
+                                GameStatus="{REFEREE_MSG_GameStatus}">
+                <SelfHealthCheck min="200"
+                                 max="400"
+                                 GameRobotStatus="{REFEREE_MSG_GameRobotStatus}">
+                  <Navigation pose="map;-1.07;-3.99;0"
+                              action_name="__default__placeholder__"/>
+                </SelfHealthCheck>
+              </BulletRedemption>
+            </BulletCheck17mm>
+          </GameTimeCheck>
+          <GameTimeCheck time_max="180"
+                         time_min="165"
+                         stage="4"
+                         GameStatus="{REFEREE_MSG_GameStatus}">
+            <BulletCheck17mm min="400"
+                             BulletRemaining="{REFEREE_MSG_BulletRemaining}">
+              <BulletRedemption BulletRemaining="{REFEREE_MSG_BulletRemaining}"
+                                GameStatus="{REFEREE_MSG_GameStatus}">
+                <SelfHealthCheck min="200"
+                                 max="400"
+                                 GameRobotStatus="{REFEREE_MSG_GameRobotStatus}">
+                  <Navigation pose="map;-1.07;-3.99;0"
+                              action_name="__default__placeholder__"/>
+                </SelfHealthCheck>
+              </BulletRedemption>
+            </BulletCheck17mm>
+          </GameTimeCheck>
+          <SelfHealthCheck min="200"
+                           max="400"
+                           GameRobotStatus="{REFEREE_MSG_GameRobotStatus}">
+            <Navigation pose="map;4.43; -1.09;0"
+                        action_name="__default__placeholder__"/>
+          </SelfHealthCheck>
+        </WaitFallback>
+      </GameTimeCheck>
+      <ForceSuccess>
+        <Fallback>
+          <GameTimeCheck time_max="2147483647"
+                         time_min="0"
+                         stage="0"
+                         GameStatus="{REFEREE_MSG_GameStatus}">
+            <Sequence>
+              <PubCanInit can_init="true"/>
+              <Sleep msec="1000"/>
+            </Sequence>
+          </GameTimeCheck>
+          <GameTimeCheck time_max="2147483647"
+                         time_min="0"
+                         stage="3"
+                         GameStatus="{REFEREE_MSG_GameStatus}">
+            <Sequence>
+              <PubCanInit can_init="true"/>
+              <Sleep msec="1000"/>
+            </Sequence>
+          </GameTimeCheck>
+          <GameTimeCheck time_max="2147483647"
+                         time_min="0"
+                         stage="4"
+                         GameStatus="{REFEREE_MSG_GameStatus}">
+            <Sequence>
+              <PubCanInit can_init="true"/>
+              <Sleep msec="1000"/>
+            </Sequence>
+          </GameTimeCheck>
+          <Sequence>
+            <PubCanInit can_init="false"/>
+            <Sleep msec="1000"/>
+          </Sequence>
+        </Fallback>
+      </ForceSuccess>
+    </ParallelAsync>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Decorator ID="BulletCheck17mm"
+               editable="true">
+      <input_port name="min"/>
+      <input_port name="BulletRemaining"/>
+    </Decorator>
+    <Decorator ID="BulletRedemption"
+               editable="true">
+      <input_port name="BulletRemaining"/>
+      <input_port name="GameStatus"/>
+    </Decorator>
+    <Decorator ID="CheckStatus">
+      <input_port name="value"
+                  default="{in_status}"
+                  type="std::chrono::time_point&lt;std::chrono::_V2::steady_clock, std::chrono::duration&lt;long, std::ratio&lt;1l, 1000000000l&gt; &gt; &gt;">状态变量</input_port>
+    </Decorator>
+    <Action ID="EnterStatus">
+      <input_port name="time"
+                  default="8"
+                  type="long">状态维持时间, 秒</input_port>
+      <output_port name="value"
+                   default="{in_status}"
+                   type="std::chrono::time_point&lt;std::chrono::_V2::steady_clock, std::chrono::duration&lt;long, std::ratio&lt;1l, 1000000000l&gt; &gt; &gt;">状态变量</output_port>
+    </Action>
+    <Action ID="ExitStatus">
+      <output_port name="value"
+                   default="{in_status}"
+                   type="std::chrono::time_point&lt;std::chrono::_V2::steady_clock, std::chrono::duration&lt;long, std::ratio&lt;1l, 1000000000l&gt; &gt; &gt;">状态变量</output_port>
+    </Action>
+    <Decorator ID="GameTimeCheck">
+      <input_port name="time_max"
+                  default="2147483647"
+                  type="int">Maximum remaining time (include)</input_port>
+      <input_port name="time_min"
+                  default="0"
+                  type="int">Minimum remaining time (include)</input_port>
+      <input_port name="stage"
+                  default="4"
+                  type="int">Check Game Stage: [0, 5]</input_port>
+      <input_port name="GameStatus"
+                  default="{REFEREE_MSG_GameStatus}"
+                  type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameStatus&gt; &gt;">Referee System Package: GameStatus</input_port>
+    </Decorator>
+    <Action ID="Navigation">
+      <input_port name="pose"
+                  type="geometry_msgs::msg::PoseStamped_&lt;std::allocator&lt;void&gt; &gt;"/>
+      <input_port name="action_name"
+                  default="__default__placeholder__"
+                  type="std::string">Action server name</input_port>
+    </Action>
+    <Decorator ID="OutpostCheck"
+               editable="true">
+      <input_port name="GameRobotStatus"/>
+      <input_port name="GameRobotHP"/>
+    </Decorator>
+    <Control ID="ParallelAsync">
+      <input_port name="failure_limit"
+                  type="rm_sentry_ai::bt::IndexMap">失败限制 [子节点索引=限制;子节点索引=限制;...]</input_port>
+      <input_port name="success_limit"
+                  type="rm_sentry_ai::bt::IndexMap">成功限制 [子节点索引=限制;子节点索引=限制;...]</input_port>
+      <input_port name="max_failures"
+                  default="1"
+                  type="unsigned long">If the number of children returning FAILURE exceeds this value, ParallelAll returns FAILURE</input_port>
+    </Control>
+    <Condition ID="PubCanInit">
+      <input_port name="can_init"
+                  default="true"
+                  type="bool">发布是否允许初始化</input_port>
+    </Condition>
+    <Decorator ID="RecoveryHealthCheck">
+      <input_port name="value"
+                  default="{is_healthing}"
+                  type="std::chrono::time_point&lt;std::chrono::_V2::steady_clock, std::chrono::duration&lt;long, std::ratio&lt;1l, 1000000000l&gt; &gt; &gt;">是否处于回血状态的数据</input_port>
+      <input_port name="max_recovery"
+                  default="600"
+                  type="int">最大回血量</input_port>
+      <input_port name="max_recovery_sec"
+                  default="8"
+                  type="int">最大回血时间, 秒(超时时间)</input_port>
+      <input_port name="once_recovery"
+                  default="100"
+                  type="int">单次回血量</input_port>
+      <input_port name="GameRobotStatus"
+                  default="{REFEREE_MSG_GameRobotStatus}"
+                  type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameRobotStatus&gt; &gt;">Referee System Package: GameRobotStatus</input_port>
+    </Decorator>
+    <Action ID="RefereeSystemUpdate"
+            editable="true">
+      <output_port name="BulletRemaining"
+                   default="{REFEREE_MSG_BulletRemaining}">Referee System Package: BulletRemaining</output_port>
+      <output_port name="ShootData"
+                   default="{REFEREE_MSG_ShootData}">Referee System Package: ShootData</output_port>
+      <output_port name="Buff"
+                   default="{REFEREE_MSG_Buff}">Referee System Package: Buff</output_port>
+      <output_port name="GameRobotStatus"
+                   default="{REFEREE_MSG_GameRobotStatus}">Referee System Package: GameRobotStatus</output_port>
+      <output_port name="EventData"
+                   default="{REFEREE_MSG_EventData}">Referee System Package: EventData</output_port>
+      <output_port name="GameRobotHP"
+                   default="{REFEREE_MSG_GameRobotHP}">Referee System Package: GameRobotHP</output_port>
+      <output_port name="GameResult"
+                   default="{REFEREE_MSG_GameResult}">Referee System Package: GameResult</output_port>
+      <output_port name="RobotHurt"
+                   default="{REFEREE_MSG_RobotHurt}">Referee System Package: RobotHurt</output_port>
+      <output_port name="GameStatus"
+                   default="{REFEREE_MSG_GameStatus}">Referee System Package: GameStatus</output_port>
+      <output_port name="SentryInfo"/>
+    </Action>
+    <Decorator ID="SelfHealthCheck">
+      <input_port name="min"
+                  default="0"
+                  type="int">min health</input_port>
+      <input_port name="max"
+                  default="2147483647"
+                  type="int">max health</input_port>
+      <input_port name="GameRobotStatus"
+                  default="{REFEREE_MSG_GameRobotStatus}"
+                  type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameRobotStatus&gt; &gt;">Referee System Package: GameRobotStatus</input_port>
+    </Decorator>
+    <Control ID="WaitFallback"/>
+  </TreeNodesModel>
+
+</root>

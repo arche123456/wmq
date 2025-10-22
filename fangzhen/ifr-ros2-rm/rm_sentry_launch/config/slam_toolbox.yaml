@@ -1,0 +1,12 @@
+slam_toolbox:
+  ros__parameters:
+    map_frame: map
+    base_frame: lidar_init
+    odom_frame: odom
+    scan_topic: /cloud_registered_body
+    use_sim_time: false
+
+    # 其他参数
+    mode: "mapping"
+    max_laser_range: 50.0
+    # 添加你需要的更多参数

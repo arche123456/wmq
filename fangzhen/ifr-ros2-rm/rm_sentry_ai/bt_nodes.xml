@@ -1,0 +1,98 @@
+<root BTCPP_format="4">
+    <TreeNodesModel>
+        <Decorator ID="BulletCheck17mm">
+            <input_port name="max" type="unsigned long" default="65535">max value, include</input_port>
+            <input_port name="min" type="unsigned long" default="0">min value, include</input_port>
+            <input_port name="BulletRemaining" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::BulletRemaining&gt; &gt;" default="{REFEREE_MSG_BulletRemaining}">Referee System Package: BulletRemaining</input_port>
+        </Decorator>
+        <Decorator ID="BulletCheck42mm">
+            <input_port name="max" type="unsigned long" default="65535">max value, include</input_port>
+            <input_port name="min" type="unsigned long" default="0">min value, include</input_port>
+            <input_port name="BulletRemaining" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::BulletRemaining&gt; &gt;" default="{REFEREE_MSG_BulletRemaining}">Referee System Package: BulletRemaining</input_port>
+        </Decorator>
+        <Decorator ID="BulletCheckCoin">
+            <input_port name="max" type="unsigned long" default="65535">max value, include</input_port>
+            <input_port name="min" type="unsigned long" default="0">min value, include</input_port>
+            <input_port name="BulletRemaining" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::BulletRemaining&gt; &gt;" default="{REFEREE_MSG_BulletRemaining}">Referee System Package: BulletRemaining</input_port>
+        </Decorator>
+        <Decorator ID="CheckStatus">
+            <input_port name="value" type="std::chrono::time_point&lt;std::chrono::_V2::steady_clock, std::chrono::duration&lt;long, std::ratio&lt;1l, 1000000000l&gt; &gt; &gt;" default="{in_status}">状态变量</input_port>
+        </Decorator>
+        <Action ID="EnterStatus">
+            <input_port name="time" type="long" default="8">状态维持时间, 秒</input_port>
+            <output_port name="value" type="std::chrono::time_point&lt;std::chrono::_V2::steady_clock, std::chrono::duration&lt;long, std::ratio&lt;1l, 1000000000l&gt; &gt; &gt;" default="{in_status}">状态变量</output_port>
+        </Action>
+        <Action ID="ExitStatus">
+            <output_port name="value" type="std::chrono::time_point&lt;std::chrono::_V2::steady_clock, std::chrono::duration&lt;long, std::ratio&lt;1l, 1000000000l&gt; &gt; &gt;" default="{in_status}">状态变量</output_port>
+        </Action>
+        <Decorator ID="GameTimeCheck">
+            <input_port name="time_max" type="int" default="2147483647">Maximum remaining time (include)</input_port>
+            <input_port name="time_min" type="int" default="0">Minimum remaining time (include)</input_port>
+            <input_port name="stage" type="int" default="4">Check Game Stage: [0, 5]</input_port>
+            <input_port name="GameStatus" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameStatus&gt; &gt;" default="{REFEREE_MSG_GameStatus}">Referee System Package: GameStatus</input_port>
+        </Decorator>
+        <Decorator ID="HasAttackTarget">
+            <input_port name="msg" type="std::shared_ptr&lt;rm_interface::msg::RmTarget_&lt;std::allocator&lt;void&gt; &gt; &gt;" default="{RmTarget}">RmTarget ptr input</input_port>
+        </Decorator>
+        <Decorator ID="HealthCheck">
+            <input_port name="data" type="std::vector&lt;rm_sentry_ai::bt::HealthCheckData, std::allocator&lt;rm_sentry_ai::bt::HealthCheckData&gt; &gt;">id,min_health,max_health;... id=team*100+robot</input_port>
+            <input_port name="need_all" type="bool" default="false">1/true='and', 0/false='or'</input_port>
+            <input_port name="GameRobotStatus" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameRobotStatus&gt; &gt;" default="{REFEREE_MSG_GameRobotStatus}">Referee System Package: GameRobotStatus</input_port>
+            <input_port name="GameRobotHP" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameRobotHP&gt; &gt;" default="{REFEREE_MSG_GameRobotHP}">Referee System Package: GameRobotHP</input_port>
+        </Decorator>
+        <Action ID="Navigation">
+            <input_port name="pose" type="geometry_msgs::msg::PoseStamped_&lt;std::allocator&lt;void&gt; &gt;"/>
+            <input_port name="action_name" type="std::string" default="__default__placeholder__">Action server name</input_port>
+        </Action>
+        <Decorator ID="NeedGyro">
+            <input_port name="target" type="std::shared_ptr&lt;rm_interface::msg::RmTarget_&lt;std::allocator&lt;void&gt; &gt; &gt;" default="{RmTarget}">RmTarget ptr input</input_port>
+            <input_port name="see" type="bool" default="true">Gyro when see target</input_port>
+            <input_port name="RobotHurt" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::RobotHurt&gt; &gt;" default="{REFEREE_MSG_RobotHurt}">Referee System Package: RobotHurt</input_port>
+            <input_port name="hurt" type="bool" default="true">Gyro when attacked by bullet</input_port>
+        </Decorator>
+        <Control ID="ParallelAsync">
+            <input_port name="failure_limit" type="rm_sentry_ai::bt::IndexMap" default="">失败限制 [子节点索引=限制;子节点索引=限制;...]</input_port>
+            <input_port name="success_limit" type="rm_sentry_ai::bt::IndexMap" default="">成功限制 [子节点索引=限制;子节点索引=限制;...]</input_port>
+            <input_port name="max_failures" type="unsigned long" default="1">If the number of children returning FAILURE exceeds this value, ParallelAll returns FAILURE</input_port>
+        </Control>
+        <Condition ID="PubCanInit">
+            <input_port name="can_init" type="bool" default="true">发布是否允许初始化</input_port>
+        </Condition>
+        <Decorator ID="RecoveryHealthCheck">
+            <input_port name="value" type="std::chrono::time_point&lt;std::chrono::_V2::steady_clock, std::chrono::duration&lt;long, std::ratio&lt;1l, 1000000000l&gt; &gt; &gt;" default="{is_healthing}">是否处于回血状态的数据</input_port>
+            <input_port name="max_recovery" type="int" default="600">最大回血量</input_port>
+            <input_port name="max_recovery_sec" type="int" default="8">最大回血时间, 秒(超时时间)</input_port>
+            <input_port name="once_recovery" type="int" default="100">单次回血量</input_port>
+            <input_port name="GameRobotStatus" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameRobotStatus&gt; &gt;" default="{REFEREE_MSG_GameRobotStatus}">Referee System Package: GameRobotStatus</input_port>
+        </Decorator>
+        <Action ID="RefereeSystemUpdate">
+            <output_port name="BulletRemaining" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::BulletRemaining&gt; &gt;" default="{REFEREE_MSG_BulletRemaining}">Referee System Package: BulletRemaining</output_port>
+            <output_port name="ShootData" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::ShootData&gt; &gt;" default="{REFEREE_MSG_ShootData}">Referee System Package: ShootData</output_port>
+            <output_port name="Buff" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::Buff&gt; &gt;" default="{REFEREE_MSG_Buff}">Referee System Package: Buff</output_port>
+            <output_port name="GameRobotStatus" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameRobotStatus&gt; &gt;" default="{REFEREE_MSG_GameRobotStatus}">Referee System Package: GameRobotStatus</output_port>
+            <output_port name="EventData" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::EventData&gt; &gt;" default="{REFEREE_MSG_EventData}">Referee System Package: EventData</output_port>
+            <output_port name="GameRobotHP" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameRobotHP&gt; &gt;" default="{REFEREE_MSG_GameRobotHP}">Referee System Package: GameRobotHP</output_port>
+            <output_port name="GameResult" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameResult&gt; &gt;" default="{REFEREE_MSG_GameResult}">Referee System Package: GameResult</output_port>
+            <output_port name="RobotHurt" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::RobotHurt&gt; &gt;" default="{REFEREE_MSG_RobotHurt}">Referee System Package: RobotHurt</output_port>
+            <output_port name="GameStatus" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameStatus&gt; &gt;" default="{REFEREE_MSG_GameStatus}">Referee System Package: GameStatus</output_port>
+        </Action>
+        <Condition ID="RmTargetUpdater">
+            <output_port name="msg" type="std::shared_ptr&lt;rm_interface::msg::RmTarget_&lt;std::allocator&lt;void&gt; &gt; &gt;" default="{RmTarget}">RmTarget ptr output</output_port>
+            <input_port name="topic_name" type="std::string" default="__default__placeholder__">Topic name</input_port>
+        </Condition>
+        <Decorator ID="SelfHealthCheck">
+            <input_port name="min" type="int" default="0">min health</input_port>
+            <input_port name="max" type="int" default="2147483647">max health</input_port>
+            <input_port name="GameRobotStatus" type="std::shared_ptr&lt;rm_sentry_ai::bt::RefereeSystemUpdate::Data&lt;RefereeSystem::packet::GameRobotStatus&gt; &gt;" default="{REFEREE_MSG_GameRobotStatus}">Referee System Package: GameRobotStatus</input_port>
+        </Decorator>
+        <Action ID="SwitchAttack">
+            <input_port name="priority" type="int" default="0">决策优先级, 大数字决策可以覆盖小数字决策</input_port>
+            <input_port name="allow" type="bool" default="false">切换到的状态, 是否允许攻击</input_port>
+        </Action>
+        <Action ID="SwitchGyro">
+            <input_port name="priority" type="int" default="0">决策优先级, 大数字决策可以覆盖小数字决策</input_port>
+            <input_port name="allow" type="bool" default="false">切换到的状态, 是否允许攻击</input_port>
+        </Action>
+        <Control ID="WaitFallback"/>
+    </TreeNodesModel>
+</root>

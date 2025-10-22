@@ -1,0 +1,13 @@
+CompileFlags:
+  Remove: 
+    - "-march=native"
+    - "-flto=*"
+---
+If:
+  PathMatch: .*\.cu
+CompileFlags:
+  Remove: 
+    - "--options-file"
+    - "--generate-code=arch=*"
+    - "-forward-unknown-to-host-compiler"
+    - "-rdc=true"

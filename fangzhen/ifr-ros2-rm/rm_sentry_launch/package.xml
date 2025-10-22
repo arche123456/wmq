@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rm_sentry_launch</name>
+  <version>0.0.1</version>
+  <description>NCUT DreamTeam RoboMaster ROS2 Package: RoboMaster Launcher</description>
+  <maintainer email="2573580691@qq.com">yuanlu</maintainer>
+  <license>AGPLv3</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend> 
+  <depend>rclcpp_components</depend>
+  <depend>ament_index_cpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>std_msgs</depend>
+  <depend>builtin_interfaces</depend>
+  <depend>navigation2</depend>
+  <depend>rm_gimbal_description</depend>
+  <depend>rm_aim_launch</depend>
+  <depend>rm_fake_referee</depend>
+  <depend>rm_sentry_ai</depend>
+  <depend>rm_nav2_bringup</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

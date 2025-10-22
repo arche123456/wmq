@@ -1,0 +1,90 @@
+rm_processor:
+  ros__parameters:
+    ekf:
+      r_xyz_factor: 0.05
+      r_yaw: 0.02
+      sigma2_q_r: 800.0
+      sigma2_q_xyz: 20.0
+      sigma2_q_yaw: 100.0
+    max_armor_distance: 10.0
+    target_frame: odom
+    tracker:
+      lost_time_thres: 0.3
+      max_match_distance: 0.15
+      max_match_yaw_diff: 1.0
+      tracking_thres: 5
+rm_serial:
+  ros__parameters:
+    baudrate: 115200
+    bytesize: 8
+    flowcontrol: 0
+    tc.v0: 30.0
+    tc.gyro_thresold: 1.57079632679
+    tc.time_delta: -0.5
+    tc.amy: 0.785398163397
+    parity: 0
+    port: /dev/ttyACM0 # USB0 - USB-TTL, # THS0 - 串口直连, # ACM0 - USB直连
+    stopbits: 1
+    timeout: 500
+rm_finder:
+  ros__parameters:
+    model_name: model-ifr
+    val_debug_show_extra: true
+    val_maxAngleDistance: 12.0
+    val_maxAngleMiss: 10.0
+    val_maxAspectRatio: 50.0
+    val_maxSizeRatio: 60000.0
+    val_minAreaSimilarity: 0.33
+    val_minAspectRatio: 2.0
+    val_minHeightSimilarity: 0.8
+    val_minSizeRatio: 10.0
+    val_minWidthSimilarity: 0.35
+    val_model_threshold: 0.8
+    val_rrMaxAngle: 40.0
+    val_submat_threshold_high: 35
+    val_submat_threshold_low: 3
+    val_threshold_cuda_red_hlow: -255
+    val_threshold_cuda_red_hhigh: 255
+    val_threshold_cuda_red_slow: 150
+    val_threshold_cuda_red_shigh: 255
+    val_threshold_cuda_red_vlow: 50
+    val_threshold_cuda_red_vhigh: 255
+    val_threshold_cuda_blue_hlow: -255
+    val_threshold_cuda_blue_hhigh: 255
+    val_threshold_cuda_blue_slow: 150
+    val_threshold_cuda_blue_shigh: 255
+    val_threshold_cuda_blue_vlow: 50
+    val_threshold_cuda_blue_vhigh: 255
+    val_enable_distance_compensation: true
+    val_compensate_model: 3
+    # val_compensate_linear_k: 0.9185
+    # val_compensate_linear_b: 0.1067
+    # val_compensate_quadratic_a: 0.0
+    # 分段1 (0~3米)
+    val_compensate_segment1_max: 3.0
+    val_compensate_segment1_k: 0.92
+    val_compensate_segment1_b: 0.1
+
+    # 分段2 (3~5米)
+    val_compensate_segment2_max: 5.0
+    val_compensate_segment2_k: 0.8714
+    val_compensate_segment2_b: 0.2
+
+    # 分段3 (>5米)
+    val_compensate_segment3_k: 0.82
+    val_compensate_segment3_b: 0.3
+    val_use_predict: false
+camera:
+  ros__parameters:
+    analog_gain: 0.0
+    camera_info_url: package://daheng_camera/config/camera_info.yaml
+    camera_name: dxi_camera
+    cvtype: 0
+    exposure_time: 1000.0
+    flip: false
+    fps: 100.0
+    use_sensor_data_qos: false
+    use_trigger: -1
+rm_gimbal_description:
+  ros__parameters:
+    robot: "rm_gimbal"

@@ -1,0 +1,61 @@
+rm_processor:
+  ros__parameters:
+    ekf:
+      r_xyz_factor: 0.05
+      r_yaw: 0.02
+      sigma2_q_r: 800.0
+      sigma2_q_xyz: 20.0
+      sigma2_q_yaw: 100.0
+    max_armor_distance: 10.0
+    target_frame: odom
+    tracker:
+      lost_time_thres: 0.3
+      max_match_distance: 0.15
+      max_match_yaw_diff: 1.0
+      tracking_thres: 5
+rm_serial:
+  ros__parameters:
+    baudrate: 115200
+    bytesize: 8
+    flowcontrol: 0
+    tc.offset:
+    - 0.0
+    - 0.0
+    - 0.06
+    - 0.0
+    - 0.0
+    tc.v0: 30.0
+    tc.gyro_thresold: 1.57079632679
+    parity: 0
+    port: /dev/ttyTHS0
+    stopbits: 1
+    timeout: 500
+rm_finder:
+  ros__parameters:
+    model_name: model-ifr
+    val_bmat_threshold: 100
+    val_debug_show_extra: true
+    val_model_threshold: 0.8
+    val_submat_threshold_high: 35
+    val_submat_threshold_low: 4
+    val_threshold_cuda_blue_b: 4.5
+    val_threshold_cuda_blue_g1: -2.5
+    val_threshold_cuda_blue_g2: -2.5
+    val_threshold_cuda_blue_r: -4.1
+    val_threshold_cuda_red_b: -4.5
+    val_threshold_cuda_red_g1: -3.0
+    val_threshold_cuda_red_g2: -3.0
+    val_threshold_cuda_red_r: 4.4
+    # val_use_predict: true
+    val_use_predict: false
+camera:
+  ros__parameters:
+    analog_gain: 0.0
+    camera_info_url: package://daheng_camera/config/camera_info.yaml
+    camera_name: dxi_camera
+    cvtype: 0
+    exposure_time: 1000.0
+    flip: false
+    fps: 100.0
+    use_sensor_data_qos: false
+    use_trigger: -1

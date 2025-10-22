@@ -1,0 +1,8 @@
+#28*15
+image: RMUL2025_plus.png
+#mode: trinary
+resolution: 0.05
+origin: [-3.75, -6.74, 0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196

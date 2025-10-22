@@ -1,0 +1,4 @@
+rm_armor_finder:
+  ros__parameters:
+    model: "/home/ifr/ros2-cv/src/ifr-ros2-cv/rm_armor_finder/model/model-ifr/model_sm.ifr_model"
+    imgs_dir: "/home/ifr/ros2-cv/models/datasets"

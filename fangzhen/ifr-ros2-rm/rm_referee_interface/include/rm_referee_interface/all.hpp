@@ -1,0 +1,13 @@
+#ifndef IFR_ROS2_CV__PACKAGE_RM_REFEREE_INTERFACE__ALL__HPP
+#define IFR_ROS2_CV__PACKAGE_RM_REFEREE_INTERFACE__ALL__HPP
+#include <rm_referee_interface/msg/buff.hpp>
+#include <rm_referee_interface/msg/bullet_remaining.hpp>
+#include <rm_referee_interface/msg/event_data.hpp>
+#include <rm_referee_interface/msg/game_result.hpp>
+#include <rm_referee_interface/msg/game_robot_hp.hpp>
+#include <rm_referee_interface/msg/game_robot_status.hpp>
+#include <rm_referee_interface/msg/game_status.hpp>
+#include <rm_referee_interface/msg/robot_hurt.hpp>
+#include <rm_referee_interface/msg/sentry_info.hpp>
+#include <rm_referee_interface/msg/shoot_data.hpp>
+#endif// IFR_ROS2_CV__PACKAGE_RM_REFEREE_INTERFACE__ALL__HPP
